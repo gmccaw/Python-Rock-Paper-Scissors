@@ -1,0 +1,104 @@
+from tkinter import *
+from tkinter import ttk
+import random
+
+#Establishes root fram and theme
+root = Tk()
+root.title("Rock, Paper, Scissors")
+
+ttk.Style().theme_use('clam')
+mainframe = ttk.Frame(root, padding = "5")
+mainframe.grid(column=0, row=0, sticky=(N,W,E,S))
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0,weight=1)
+
+#Initializes variables
+numwins = IntVar()
+numloss= IntVar()
+othrow = StringVar()
+pchoice= StringVar()
+outcome = StringVar()
+
+
+#Three functions, one for each possible choice and linked to each corresponding button
+#Uses random function to select from 3 possibles choices and compares to user choice
+#If loops determine win or loss and pass to result variable
+#Each button event also increments the appropriate win/loss counter
+def rock():
+    throws = ['Rock', 'Paper', 'Scissors']
+    pthrow = 'Rock'
+    pchoice.set(pthrow)
+    choice = random.choice(throws)
+    othrow.set(choice)
+    if pthrow == choice:
+        result = 'Tie! Choose again'
+    elif choice == 'Paper':
+        result = 'You Lose!'
+        numloss.set(numloss.get() + 1)
+    elif choice == 'Scissors':
+        result = 'You Win!'
+        numwins.set(numwins.get() + 1)
+    outcome.set(result)
+  
+      
+
+def paper():
+    throws = ['Rock', 'Paper', 'Scissors']
+    pthrow = 'Paper'
+    pchoice.set(pthrow)
+    choice = random.choice(throws)
+    othrow.set(choice)
+    if pthrow == choice:
+        result = 'Tie! Choose again'
+    elif choice == 'Scissors':
+        result = 'You Lose!'
+        numloss.set(numloss.get() + 1)
+    elif choice == 'Rock':
+        result = 'You Win!'
+        numwins.set(numwins.get() + 1)
+    outcome.set(result)
+
+def scissors():
+    throws = ['Rock', 'Paper', 'Scissors']
+    pthrow = 'Scissors'
+    pchoice.set(pthrow)
+    choice = random.choice(throws)
+    othrow.set(choice)
+    if pthrow == choice:
+        result = 'Tie! Choose again'
+    elif choice == 'Rock':
+        result = 'You Lose!'
+        numloss.set(numloss.get() + 1)
+    elif choice == 'Paper':
+        result = 'You Win!'
+        numwins.set(numwins.get() + 1)
+    outcome.set(result)
+
+
+
+#Setup throw selection buttons
+ttk.Button(mainframe, text='Rock', command=rock).grid(column=1, row=1, sticky=W)
+ttk.Button(mainframe, text='Paper', command=paper).grid(column=1, row=2, sticky=W)
+ttk.Button(mainframe, text='Scissors', command=scissors).grid(column=1, row=3, sticky=W)
+
+#Adds labels for tracking wins/losses
+ttk.Label(mainframe, text='Wins: ').grid(column=1, row=5, sticky=W)
+ttk.Label(mainframe, text='Losses: ').grid(column=3, row=5, sticky=W)
+ttk.Label(mainframe, textvariable=numwins).grid(column=2, row=5, sticky=W)
+ttk.Label(mainframe, textvariable=numloss).grid(column=4, row=5, sticky=W)
+
+#Displays programs random choice with heading "Opponent Throw"
+ttk.Label(mainframe, text='Opponent Throw: ').grid(column=4, row=1, sticky=W)
+ttk.Label(mainframe, textvariable=othrow).grid(column=4, row=2, sticky=W)
+
+#Displays user choice with heading "Your Throw"
+ttk.Label(mainframe, text='Your Throw: ').grid(column=2, row=1, sticky=W)
+ttk.Label(mainframe, textvariable=pchoice).grid(column=2, row=2, sticky=W)
+
+#Indicates whether round was win, loss, or tie
+ttk.Label(mainframe, textvariable=outcome).grid(column=3, row=3, sticky=(W,E))
+
+
+
+
+root.mainloop()
